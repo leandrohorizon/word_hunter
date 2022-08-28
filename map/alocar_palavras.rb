@@ -1,10 +1,16 @@
 class AlocarPalavras
   attr_accessor :largura, :altura, :palavras
 
-  def call
-    limpar
+  def initialize(largura, altura, palavras)
+    @largura = largura
+    @altura = altura
+    @palavras = palavras
+  end
 
+  def call
     alocar_palavras
+
+    finalizar
   end
 
   private
@@ -13,8 +19,8 @@ class AlocarPalavras
     @linha = []
     @casas = []
 
-    (0..largura).each do |x|
-      (0..altura).each do |y|
+    (0..largura - 1).each do |x|
+      (0..altura - 1).each do |y|
         @linha[y] = '.'
       end
 
@@ -23,6 +29,8 @@ class AlocarPalavras
   end
 
   def alocar_palavras
+    limpar
+
     palavras.each do |palavra|
       next unless palavra.vertical?
       return alocar_palavras unless encaixar_aqui(palavra)
@@ -32,10 +40,10 @@ class AlocarPalavras
 
     palavras.each do |palavra|
       next unless palavra.horizontal?
+
       return alocar_palavras unless encaixar_aqui(palavra)
     end
 
-    finalizar
     true
   end
 
@@ -46,17 +54,15 @@ class AlocarPalavras
 
     return false if lista_possiveis_linhas.empty?
 
-    random_number = SecureRandom.random_number(possiveis_linhas.size)
-    linha_index = lista_possiveis_linhas[random_number]
+    linha_index = lista_possiveis_linhas.sample
 
     lista_possiveis_colunas = possiveis_colunas(letras, linha_index)
 
     return false if lista_possiveis_colunas.empty?
 
-    random_number = SecureRandom.random_number(possiveis_colunas.size)
-    coluna_index = lista_possiveis_colunas[random_number]
+    coluna_index = lista_possiveis_colunas.sample
 
-    @casas[linha_index] = concatenar(@casas[linha_index], letras, coluna_index)
+    @casas[linha_index] = concatenar(@casas[linha_index].dup, letras, coluna_index)
 
     true
   end
@@ -76,7 +82,7 @@ class AlocarPalavras
 
         if contador == letras.size
           casasi << index
-          return
+          break
         end
       end
     end
@@ -91,7 +97,7 @@ class AlocarPalavras
     (0..range_possivel).each_with_index do |_numero, index|
       contador = 0
 
-      (0..letras.size).each do |numero2|
+      (0..letras.size - 1).each do |numero2|
         casa = @casas[num_casa][numero2]
         next unless casa == '.' || casa == letras[contador]
 
@@ -114,25 +120,26 @@ class AlocarPalavras
       end
     end
 
-    true
+    arr1
   end
 
   def girar
-    mapa = []
+    mapa = @casas
 
-    (0..@casas.size).each do |x|
-      (0..@casas[x].size).each do |y|
+    (0..@casas.size - 1).each do |x|
+      (0..@casas[x].size - 1).each do |y|
         mapa[y][x] = @casas[x][y]
       end
     end
   end
 
   def finalizar
-    (0..@casas.size).each do |x|
-      (0..@casas[x].size).each do |y|
-        if @casas[x][y] == '.'
-          random_number = SecureRandom.random_number(alfabeto.size)
-          @casas[x][y] = alfabeto[random_number]
+    @casas.map do |colunas|
+      colunas.map do |coluna|
+        if coluna == '.'
+          alfabeto.sample
+        else
+          coluna
         end
       end
     end
@@ -141,14 +148,22 @@ class AlocarPalavras
   def alfabeto
     return @alfabeto if defined?(@alfabeto)
 
-    @alfabeto = []
+    @alfabeto = %w[a b c d e f g h i j k l m n o p q r s t u v w x y z]
 
     palavras.each do |palavra|
-      palavra.each do |letra|
-        next if @alfabeto.include(letra)
+      palavra.text.split('').each do |letra|
+        next if @alfabeto.include?(letra)
 
         @alfabeto << letra
       end
     end
   end
 end
+
+require 'pry'
+require_relative 'palavra'
+
+palavra = Palavra.new('ola', :horizontal)
+alocate = AlocarPalavras.new(10, 10, [palavra])
+
+alocate.call
