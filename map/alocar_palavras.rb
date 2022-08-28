@@ -161,7 +161,7 @@ class AlocarPalavras
 end
 
 require 'pry'
-require_relative 'palavra'
+require_relative '../palavra'
 
 palavra = Palavra.new('ola', :horizontal)
 alocate = AlocarPalavras.new(10, 10, [palavra])
