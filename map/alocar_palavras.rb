@@ -2,9 +2,9 @@ class AlocarPalavras
   attr_accessor :largura, :altura, :palavras
 
   def call
-    limpar()
+    limpar
 
-    alocar_palavras()
+    alocar_palavras
   end
 
   private
@@ -24,28 +24,20 @@ class AlocarPalavras
 
   def alocar_palavras
     palavras.each do |palavra|
-      if palavra.vertical?
-        unless encaixar_aqui(palavra)
-          return alocar_palavras()
-        end
-      end
+      next unless palavra.vertical?
+      return alocar_palavras unless encaixar_aqui(palavra)
     end
 
-    girar()
+    girar
 
     palavras.each do |palavra|
-      if palavra.horizontal?
-        unless encaixar_aqui(palavra)
-          return alocar_palavras()
-        end
-      end
+      next unless palavra.horizontal?
+      return alocar_palavras unless encaixar_aqui(palavra)
     end
 
-    finalizar()
+    finalizar
     true
   end
-
-
 
   def encaixar_aqui(palavra)
     letras = palavra.letras()
@@ -96,18 +88,16 @@ class AlocarPalavras
     casasi = []
     range_possivel = largura - letras.size
 
-    (0..range_possivel).each_with_index do |numero, index|
+    (0..range_possivel).each_with_index do |_numero, index|
       contador = 0
 
       (0..letras.size).each do |numero2|
         casa = @casas[num_casa][numero2]
-        if casa == '.' || casa == letras[contador]
-          contador += 1
+        next unless casa == '.' || casa == letras[contador]
 
-          if contador == letras.size
-            casasi << index
-          end
-        end
+        contador += 1
+
+        casasi << index if contador == letras.size
       end
     end
 
@@ -137,7 +127,7 @@ class AlocarPalavras
     end
   end
 
-  def finalizar()
+  def finalizar
     (0..@casas.size).each do |x|
       (0..@casas[x].size).each do |y|
         if @casas[x][y] == '.'
