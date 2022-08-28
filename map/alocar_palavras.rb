@@ -77,7 +77,7 @@ class AlocarPalavras
 
       casa.each do |valor|
         if valor == '.' || valor == letras[contador]
-          contador++
+          contador += 1
         else
           contador = 0
         end
@@ -102,7 +102,7 @@ class AlocarPalavras
       (0..letras.size).each do |numero2|
         casa = @casas[num_casa][numero2]
         if casa == '.' || casa == letras[contador]
-          contador++
+          contador += 1
 
           if contador == letras.size
             casasi << index
@@ -120,7 +120,7 @@ class AlocarPalavras
     (0..largura).each do |x|
       if x >= posicao && j <= (arr2.size - 1)
         arr1[x] = arr2[j]
-        j++
+        j += 1
       end
     end
 
