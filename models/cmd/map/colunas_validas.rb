@@ -1,13 +1,12 @@
 module Cmd
   module Map
     class ColunasValidas
-      attr_accessor :casas, :palavra, :num_casa, :largura
+      attr_accessor :map, :palavra, :linha_index
 
-      def initialize(casa, palavra, num_casa, largura)
-        @casas = casa
+      def initialize(map, palavra, linha_index)
+        @map = map
         @palavra = palavra
-        @num_casa = num_casa
-        @largura = largura
+        @linha_index = linha_index
       end
 
       def call
@@ -18,13 +17,13 @@ module Cmd
 
       def possiveis_colunas
         casasi = []
-        range_possivel = largura - letras.size
+        range_possivel = map.largura - letras.size
 
         (0..range_possivel + 1).each do |index|
           contador = 0
 
-          (index..letras.size - 1).each do |numero2|
-            casa = @casas[num_casa][numero2]
+          (index..letras.size - 1).each do |coluna_index|
+            casa = map.casas[linha_index][coluna_index]
             unless casa == '.' || casa == letras[contador]
               contador = 0
               next
