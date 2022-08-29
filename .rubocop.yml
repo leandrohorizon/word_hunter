@@ -1,0 +1,35 @@
+require:
+  - 'rubocop-rails'
+
+AllCops:
+ TargetRubyVersion: 3.0
+ NewCops: enable
+ SuggestExtensions: true
+ Exclude:
+   - 'bin/**/*'
+   - 'config/**/*'
+   - 'db/**/*'
+   - 'node_modules/**/*'
+   - 'vendor/**/*'
+
+Style/AsciiComments:
+  Enabled: false
+Style/ClassAndModuleChildren:
+  EnforcedStyle: compact
+Style/Documentation:
+  Enabled: false
+Style/FrozenStringLiteralComment:
+ Enabled: false
+Style/ClassAndModuleChildren:
+ Enabled: false
+Metrics/BlockLength:
+ IgnoredMethods: ['describe', 'context', 'it']
+Metrics/ClassLength:
+  Exclude:
+    - 'spec/**/*'
+Rails/EnumHash:
+  Enabled: false
+Rails/I18nLocaleTexts:
+  Enabled: false
+Layout/LineLength:
+  Max: 90
