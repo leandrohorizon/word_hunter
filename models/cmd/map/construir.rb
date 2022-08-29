@@ -10,7 +10,7 @@ module Cmd
       def call
         construir
 
-        Cmd::Map::Finalizar.new(map.casas, map.palavras).call
+        Cmd::Map::Finalizar.new(map).call
       end
 
       private
@@ -24,7 +24,7 @@ module Cmd
           construir if alocar(palavra).nil?
         end
 
-        map.casas = Cmd::Map::Girar.new(map.casas, map.largura, map.altura).call
+        map.casas = Cmd::Map::Girar.new(map).call
 
         map.palavras.each do |palavra|
           next unless palavra.horizontal?
@@ -40,7 +40,7 @@ module Cmd
 
         map.casas[linha_index] =
           Cmd::Map::Encaixar.new(
-            map.casas[linha_index].dup, palavra.letras, coluna_index, map.largura).call
+            map, palavra, linha_index, coluna_index).call
       end
 
       def posicoes_random(palavra)
@@ -49,7 +49,7 @@ module Cmd
 
         linha_index = linhas.sample
 
-        colunas = Cmd::Map::ColunasValidas.new(map.casas, palavra, linha_index, map.largura).call
+        colunas = Cmd::Map::ColunasValidas.new(map, palavra, linha_index).call
         return if colunas.empty?
 
         coluna_index = colunas.sample
