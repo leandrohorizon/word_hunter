@@ -1,42 +1,36 @@
 module Cmd
   module Map
     class Construir
-      attr_accessor :palavras, :largura, :altura
+      attr_accessor :map
 
-      def initialize(largura, altura, palavras)
-        @palavras = palavras
-        @largura = largura
-        @altura = altura
+      def initialize(map)
+        @map = map
       end
 
       def call
         construir
 
-        Cmd::Map::Finalizar.new(@casas, @palavras).call
+        Cmd::Map::Finalizar.new(map.casas, map.palavras).call
       end
 
       private
 
       def construir
-        reset
+        map.reset
 
-        @palavras.each do |palavra|
+        map.palavras.each do |palavra|
           next unless palavra.vertical?
 
           construir if alocar(palavra).nil?
         end
 
-        @casas = Cmd::Map::Girar.new(@casas, largura, altura).call
+        map.casas = Cmd::Map::Girar.new(map.casas, map.largura, map.altura).call
 
-        @palavras.each do |palavra|
+        map.palavras.each do |palavra|
           next unless palavra.horizontal?
 
           construir if alocar(palavra).nil?
         end
-      end
-
-      def reset
-        @casas = Array.new(altura) { Array.new(largura, '.') }
       end
 
       def alocar(palavra)
@@ -44,18 +38,18 @@ module Cmd
 
         return if linha_index.nil?
 
-        @casas[linha_index] =
+        map.casas[linha_index] =
           Cmd::Map::Encaixar.new(
-            @casas[linha_index].dup, palavra.letras, coluna_index, largura).call
+            map.casas[linha_index].dup, palavra.letras, coluna_index, map.largura).call
       end
 
       def posicoes_random(palavra)
-        linhas = Cmd::Map::LinhasValidas.new(palavra, @casas).call
+        linhas = Cmd::Map::LinhasValidas.new(palavra, map.casas).call
         return if linhas.empty?
 
         linha_index = linhas.sample
 
-        colunas = Cmd::Map::ColunasValidas.new(@casas, palavra, linha_index, largura).call
+        colunas = Cmd::Map::ColunasValidas.new(map.casas, palavra, linha_index, map.largura).call
         return if colunas.empty?
 
         coluna_index = colunas.sample
