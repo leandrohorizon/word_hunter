@@ -161,6 +161,9 @@ PLATFORMS
 DEPENDENCIES
   bootsnap
   debug
+  net-imap
+  net-pop
+  net-smtp
   puma (~> 5.0)
   rails (~> 7.0.3, >= 7.0.3.1)
   tzinfo-data
