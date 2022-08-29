@@ -38,9 +38,12 @@ module Cmd
 
         return if linha_index.nil?
 
+        palavra.position = { x: linha_index, y: coluna_index }
+
         map.casas[linha_index] =
           Cmd::Map::Encaixar.new(
-            map, palavra, linha_index, coluna_index).call
+            map, palavra, linha_index, coluna_index
+          ).call
       end
 
       def posicoes_random(palavra)
