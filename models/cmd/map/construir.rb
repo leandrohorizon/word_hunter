@@ -38,7 +38,7 @@ module Cmd
 
         return if linha_index.nil?
 
-        palavra.position = { x: linha_index, y: coluna_index }
+        palavra.set_positions(linha_index, coluna_index)
 
         map.casas[linha_index] =
           Cmd::Map::Encaixar.new(
