@@ -1,11 +1,10 @@
 module Cmd
   module Map
     class Finalizar
-      attr_accessor :casas, :palavras
+      attr_accessor :map
 
-      def initialize(casas, palavras)
-        @casas = casas
-        @palavras = palavras
+      def initialize(map)
+        @map = map
       end
 
       def call
@@ -15,7 +14,7 @@ module Cmd
       private
 
       def finalizar
-        @casas.map do |colunas|
+        map.casas.map do |colunas|
           colunas.map do |coluna|
             if coluna == '.'
               alfabeto.sample
@@ -29,7 +28,7 @@ module Cmd
       def alfabeto
         alfabeto = ('a'..'z').to_a
 
-        @palavras.each do |palavra|
+        map.palavras.each do |palavra|
           palavra.letras.each do |letra|
             next if alfabeto.include?(letra)
 
