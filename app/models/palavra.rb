@@ -19,11 +19,12 @@ class Palavra
   end
 
   def set_positions(linha_index, coluna_index)
-    @finish_in =
-      if vertical?
-        { x: linha_index + text.size, y: coluna_index }
-      else
-        { x: linha_index, y: coluna_index + text.size }
-      end
+    if vertical?
+      @starts_in = { x: linha_index, y: coluna_index }
+      @finish_in = { x: linha_index, y: coluna_index + text.size - 1 }
+    else
+      @starts_in = { x: coluna_index, y: linha_index }
+      @finish_in = { x: coluna_index + text.size, y: linha_index }
+    end
   end
 end

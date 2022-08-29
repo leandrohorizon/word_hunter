@@ -10,7 +10,11 @@ module Cmd
       def call
         construir
 
-        Cmd::Map::Finalizar.new(map).call
+        {
+          map: Cmd::Map::Finalizar.new(map).call,
+          words: map.palavras
+        }
+
       end
 
       private
