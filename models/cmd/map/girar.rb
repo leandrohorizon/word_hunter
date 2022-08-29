@@ -1,12 +1,10 @@
 module Cmd
   module Map
     class Girar
-      attr_accessor :casas, :largura, :altura
+      attr_accessor :map
 
-      def initialize(casas, largura, altura)
-        @casas = casas
-        @largura = largura
-        @altura = altura
+      def initialize(map)
+        @map = map
       end
 
       def call
@@ -16,11 +14,11 @@ module Cmd
       private
 
       def girar
-        mapa = Array.new(altura) { Array.new(largura, '.') }
+        mapa = Array.new(map.altura) { Array.new(map.largura, '.') }
 
-        (0..@casas.size - 1).each do |x|
-          (0..@casas[x].size - 1).each do |y|
-            mapa[y][x] = @casas[x][y]
+        (0..map.casas.size - 1).each do |x|
+          (0..map.casas[x].size - 1).each do |y|
+            mapa[y][x] = map.casas[x][y]
           end
         end
 
