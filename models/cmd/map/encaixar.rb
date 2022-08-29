@@ -1,13 +1,13 @@
 module Cmd
   module Map
     class Encaixar
-      attr_accessor :linha, :letras, :posicao, :largura
+      attr_accessor :map, :palavra, :linha_index, :coluna_index
 
-      def initialize(linha, letras, posicao, largura)
-        @linha = linha
-        @letras = letras
-        @posicao = posicao
-        @largura = largura
+      def initialize(map, palavra, linha_index, coluna_index)
+        @map = map
+        @palavra = palavra
+        @linha_index = linha_index
+        @coluna_index = coluna_index
       end
 
       def call
@@ -17,16 +17,22 @@ module Cmd
       private
 
       def encaixar
+        linha = map.casas[linha_index].dup
+
         j = 0
 
-        (0..largura).each do |x|
-          if x >= posicao && j <= (letras.size - 1)
+        (0..map.largura).each do |x|
+          if x >= coluna_index && j <= (letras.size - 1)
             linha[x] = letras[j]
             j += 1
           end
         end
 
         linha
+      end
+
+      def letras
+        palavra.letras
       end
     end
   end
