@@ -6,7 +6,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      get :get_map, to: 'maps#get_map'
+      get :new_map, to: 'maps#new_map'
     end
   end
 end
