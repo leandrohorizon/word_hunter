@@ -1,5 +1,5 @@
 class Palavra
-  attr_accessor :text, :orientation
+  attr_accessor :text, :orientation, :position
 
   def initialize(text, orientation)
     @text = text
@@ -15,6 +15,6 @@ class Palavra
   end
 
   def letras
-    @text.split('')
+    @text.chars
   end
 end
