@@ -16,7 +16,7 @@ module Cmd
       def finalizar
         map.casas.map do |colunas|
           colunas.map do |coluna|
-            if coluna == '.'
+            if coluna.nil?
               alfabeto.sample
             else
               coluna

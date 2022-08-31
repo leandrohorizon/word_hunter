@@ -21,7 +21,7 @@ module Cmd
           contador = 0
 
           casa.each do |valor|
-            if valor == '.' || valor == letras[contador]
+            if valor.nil? || valor == letras[contador]
               contador += 1
             else
               contador = 0

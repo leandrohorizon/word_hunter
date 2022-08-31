@@ -10,6 +10,6 @@ class Map
   end
 
   def reset
-    @casas = Array.new(altura) { Array.new(largura, '.') }
+    @casas = Array.new(altura) { Array.new(largura, nil) }
   end
 end

@@ -24,7 +24,7 @@ module Cmd
 
           (index..letras.size - 1).each do |coluna_index|
             casa = map.casas[linha_index][coluna_index]
-            unless casa == '.' || casa == letras[contador]
+            unless casa.nil? || casa == letras[contador]
               contador = 0
               next
             end

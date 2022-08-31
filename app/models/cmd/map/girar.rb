@@ -14,7 +14,7 @@ module Cmd
       private
 
       def girar
-        mapa = Array.new(map.altura) { Array.new(map.largura, '.') }
+        mapa = Array.new(map.altura) { Array.new(map.largura, nil) }
 
         (0..map.casas.size - 1).each do |x|
           (0..map.casas[x].size - 1).each do |y|
