@@ -10,8 +10,6 @@ module Cmd
 
       def call
         alocar
-
-        map
       end
 
       private
@@ -19,9 +17,13 @@ module Cmd
       def alocar
         x, y = diagonais_validas.sample
 
+        return if x.nil?
+
         palavra.letras.each_with_index do |letra, index|
           map.casas[x + index][y + index] = letra
         end
+
+        map
       end
 
       def diagonais_validas
